@@ -1,0 +1,102 @@
+---
+const categories = [
+  { key: "all", label: "Tout" },
+  { key: "photographies", label: "Photographies" },
+  { key: "affiches", label: "Affiches" },
+  { key: "sites-web", label: "Sites Web" },
+  { key: "reseaux-sociaux", label: "Reseaux Sociaux" },
+  { key: "dessins", label: "Dessins" }
+];
+
+const projects = [
+  { id: 1, title: "Lumiere Urbaine", category: "photographies", image: "/images/photo-1.jpg", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit." },
+  { id: 2, title: "Portrait Dore", category: "photographies", image: "/images/photo-2.jpg", description: "Sed do eiusmod tempor incididunt ut labore." },
+  { id: 3, title: "Festival Typographique", category: "affiches", image: "/images/poster-1.jpg", description: "Ut enim ad minim veniam, quis nostrud exercitation." },
+  { id: 4, title: "Evenement Moderniste", category: "affiches", image: "/images/poster-2.jpg", description: "Duis aute irure dolor in reprehenderit." },
+  { id: 5, title: "E-commerce Redesign", category: "sites-web", image: "/images/web-1.jpg", description: "Excepteur sint occaecat cupidatat non proident." },
+  { id: 6, title: "Brand Platform", category: "sites-web", image: "/images/web-2.jpg", description: "Sunt in culpa qui officia deserunt mollit." },
+  { id: 7, title: "Campagne Gradient", category: "reseaux-sociaux", image: "/images/social-1.jpg", description: "Nemo enim ipsam voluptatem quia voluptas sit." },
+  { id: 8, title: "Etude Botanique", category: "dessins", image: "/images/drawing-1.jpg", description: "Neque porro quisquam est qui dolorem ipsum." },
+  { id: 9, title: "Croquis Felin", category: "dessins", image: "/images/drawing-2.jpg", description: "Quis autem vel eum iure reprehenderit." }
+];
+---
+
+<section class="py-12 container px-6">
+  <div class="flex flex-wrap gap-3 mb-12" id="portfolio-filters">
+    {
+      categories.map((cat) => (
+        <button
+          data-category={cat.key}
+          class={`portfolio-filter px-4 py-2 text-xs font-body uppercase tracking-widest border transition-all duration-300 ${
+            cat.key === "all"
+              ? "bg-foreground text-background border-foreground"
+              : "bg-transparent text-muted-foreground border-border hover:border-foreground hover:text-foreground"
+          }`}
+        >
+          {cat.label}
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="columns-1 sm:columns-2 lg:columns-3 gap-5 space-y-5" id="portfolio-grid">
+    {
+      projects.map((project, i) => (
+        <article
+          data-project-category={project.category}
+          class="portfolio-card break-inside-avoid group cursor-pointer animate-fade-in"
+          style={`animation-delay: ${i * 0.08}s;`}
+        >
+          <div class="overflow-hidden bg-card">
+            <img
+              src={project.image}
+              alt={project.title}
+              loading="lazy"
+              class="w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+          <div class="pt-3 pb-1">
+            <div class="flex items-baseline justify-between gap-4">
+              <h3 class="font-heading text-xl text-foreground">{project.title}</h3>
+              <span class="text-xs font-body text-muted-foreground uppercase tracking-wider">
+                {categories.find((c) => c.key === project.category)?.label}
+              </span>
+            </div>
+            <p class="text-sm text-muted-foreground mt-1 font-body">{project.description}</p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script is:inline>
+  const filterButtons = document.querySelectorAll(".portfolio-filter");
+  const cards = document.querySelectorAll(".portfolio-card");
+
+  const applyFilter = (activeCategory) => {
+    cards.forEach((card) => {
+      const category = card.getAttribute("data-project-category");
+      const shouldShow = activeCategory === "all" || category === activeCategory;
+      card.classList.toggle("hidden", !shouldShow);
+    });
+
+    filterButtons.forEach((button) => {
+      const buttonCategory = button.getAttribute("data-category");
+      const isActive = buttonCategory === activeCategory;
+      button.classList.toggle("bg-foreground", isActive);
+      button.classList.toggle("text-background", isActive);
+      button.classList.toggle("border-foreground", isActive);
+      button.classList.toggle("bg-transparent", !isActive);
+      button.classList.toggle("text-muted-foreground", !isActive);
+      button.classList.toggle("border-border", !isActive);
+    });
+  };
+
+  filterButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      const category = button.getAttribute("data-category") || "all";
+      applyFilter(category);
+    });
+  });
+</script>

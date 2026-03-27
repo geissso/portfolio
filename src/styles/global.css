@@ -1,0 +1,65 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 40 33% 96%;
+    --foreground: 220 20% 10%;
+    --card: 40 25% 94%;
+    --card-foreground: 220 20% 10%;
+    --primary: 220 60% 45%;
+    --primary-foreground: 40 33% 96%;
+    --secondary: 25 80% 55%;
+    --secondary-foreground: 40 33% 96%;
+    --muted: 40 15% 88%;
+    --muted-foreground: 220 10% 45%;
+    --accent: 25 80% 55%;
+    --accent-foreground: 40 33% 96%;
+    --border: 40 15% 85%;
+    --input: 40 15% 85%;
+    --ring: 220 60% 45%;
+    --radius: 0.25rem;
+  }
+
+  .dark {
+    --background: 225 25% 8%;
+    --foreground: 40 20% 90%;
+    --card: 225 20% 12%;
+    --card-foreground: 40 20% 90%;
+    --primary: 220 70% 60%;
+    --primary-foreground: 225 25% 8%;
+    --secondary: 25 80% 55%;
+    --secondary-foreground: 225 25% 8%;
+    --muted: 225 15% 18%;
+    --muted-foreground: 220 10% 55%;
+    --accent: 25 80% 55%;
+    --accent-foreground: 225 25% 8%;
+    --border: 225 15% 20%;
+    --input: 225 15% 20%;
+    --ring: 220 70% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: "Space Grotesk", sans-serif;
+    background-image: radial-gradient(circle at 90% 10%, hsl(var(--secondary) / 0.12), transparent 34%),
+      radial-gradient(circle at 10% 80%, hsl(var(--primary) / 0.1), transparent 38%);
+    min-height: 100vh;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Instrument Serif", serif;
+  }
+}
