@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || "http://127.0.0.1:8090";
+const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || "http://pbportfolio.geiss-solene.fr/";
 const db = new PocketBase(POCKETBASE_URL);
 
 const CATEGORIES = [
@@ -122,7 +122,7 @@ async function fetchFirstAvailableCollection(categoryKey) {
 	for (const collectionName of candidates) {
 		try {
 			const records = await db.collection(collectionName).getFullList({
-				sort: "-created",
+				sort: "-date_creation,-created",
 				requestKey: null
 			});
 
