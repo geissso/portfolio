@@ -1,0 +1,90 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="BDE - Experience benevole" description="Experience benevole au Bureau des Etudiants.">
+	<article class="pb-20 md:pb-28">
+		<section class="relative isolate min-h-[58vh] md:min-h-[68vh] overflow-hidden">
+			<img
+				src="/images/photo-1.jpg"
+				alt="Hero BDE"
+				class="absolute inset-0 h-full w-full object-cover"
+				loading="eager"
+			/>
+			<div class="absolute inset-0 bg-black/55"></div>
+			<div class="container relative z-10 flex min-h-[58vh] md:min-h-[68vh] flex-col justify-between px-6 pt-20 pb-8 md:pt-24 md:pb-12">
+				<a
+					href="/"
+					class="inline-flex w-fit items-center gap-2 text-sm font-body uppercase tracking-wider text-white/90 hover:text-white transition-colors"
+				>
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+					Retour
+				</a>
+				<div>
+					<p class="text-xs font-body uppercase tracking-[0.3em] text-white/80 mb-3">Experience benevole</p>
+					<h1 class="font-heading text-5xl md:text-7xl text-white mb-3">BDE</h1>
+					<p class="font-body text-sm md:text-base text-white/90 max-w-xl">
+						Communication visuelle, entraide et projets etudiants au coeur de l'association.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<div class="container px-6 pt-14 md:pt-20">
+			<div class="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 items-center mb-14 md:mb-20">
+			<div>
+				<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
+					Experience benevole
+				</p>
+				<h2 class="font-heading text-4xl md:text-5xl text-foreground mb-6">
+					BDE
+				</h2>
+				<p class="text-base md:text-lg font-body leading-relaxed text-muted-foreground max-w-2xl mb-6">
+					Mon experience au Bureau des Etudiants m'a permis de participer a la creation de supports de communication,
+					d'accompagner les temps forts de l'association et de travailler sur des visuels concrets pour les etudiants.
+				</p>
+				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
+					J'y ai developpe une approche plus directe de la communication associative, avec des contraintes de delai,
+					de lisibilite et d'impact visuel.
+				</p>
+			</div>
+
+			<div class="aspect-[4/5] overflow-hidden border border-border bg-card shadow-sm">
+				<img src="/images/photo-1.jpg" alt="Experience BDE" class="h-full w-full object-cover" loading="lazy" />
+			</div>
+			</div>
+
+			<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Missions</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Creation de visuels, declinaisons de contenus et accompagnement des evenements du bureau.
+				</p>
+			</div>
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Apprentissages</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Coordination, adaptation rapide et construction d'une image coherente pour l'association.
+				</p>
+			</div>
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Resultat</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Une experience ancree dans le collectif, au service de l'animation et de la visibilite de la vie etudiante.
+				</p>
+			</div>
+			</section>
+
+			<div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
+			<a href="/caps" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
+				Voir CAPS
+			</a>
+			<a href="/#experiences-benevoles" class="text-sm font-body uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
+				Retour aux experiences
+			</a>
+			</div>
+		</div>
+	</article>
+</BaseLayout>

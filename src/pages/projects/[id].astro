@@ -1,0 +1,675 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getPortfolioData, getProjectById } from "../../js/backend.mjs";
+
+export async function getStaticPaths() {
+  const { projects } = await getPortfolioData();
+  
+  return projects.map((project) => ({
+    params: { id: project.id },
+    props: { project }
+  }));
+}
+
+const { id } = Astro.params;
+const { project } = Astro.props;
+
+if (!project) {
+  return Astro.redirect("/");
+}
+
+const { projects } = await getPortfolioData();
+const currentIndex = projects.findIndex((p) => p.id === id);
+const previousProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
+const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
+---
+
+<BaseLayout title={`${project.title} - Portfolio`} description={project.description}>
+  <article class="min-h-screen py-16 md:py-24">
+    {/* Hero Section avec image principale */}
+    <section class="container px-6 mb-16 md:mb-24">
+      <div class="mb-8 md:mb-12">
+        <a
+          href="/"
+          class="inline-flex items-center gap-2 text-sm font-body uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <svg
+            class="w-4 h-4"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Retour
+        </a>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
+        {/* Image principale - 2 colonnes sur desktop */}
+        <div class="lg:col-span-2">
+          <div class="aspect-[3/4] overflow-hidden bg-card border border-border">
+            <img
+              src={project.image}
+              alt={project.title}
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+
+        {/* Métadonnées - 1 colonne sur desktop */}
+        <div class="flex flex-col justify-start">
+          <div class="space-y-8">
+            <div>
+              <h1 class="font-heading text-4xl md:text-5xl text-foreground mb-4">
+                {project.title}
+              </h1>
+              <div class="flex flex-wrap gap-3">
+                <span
+                  class="px-3 py-1.5 bg-accent text-accent-foreground text-xs font-body uppercase tracking-widest"
+                >
+                  {project.categoryLabel}
+                </span>
+                {project.type && (
+                  <span
+                    class="px-3 py-1.5 bg-card text-foreground text-xs font-body uppercase tracking-widest border border-border"
+                  >
+                    {project.type}
+                  </span>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <p class="text-base leading-relaxed text-foreground font-body">
+                {project.description}
+              </p>
+            </div>
+
+            {project.skills && project.skills.length > 0 && (
+              <div>
+                <p class="text-xs text-muted-foreground uppercase tracking-wider font-body mb-3">
+                  Competences utilisees
+                </p>
+                <div class="skills-logos">
+                  {project.skills.map((skillLogoUrl, index) => (
+                    <div class="skill-logo-item" title={`Competence ${index + 1}`}>
+                      <img
+                        src={skillLogoUrl}
+                        alt={`Logo competence ${index + 1}`}
+                        class="skill-logo-image"
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Année/date */}
+            {project.created && (
+              <div class="pt-6 border-t border-border">
+                <p class="text-xs text-muted-foreground uppercase tracking-wider font-body mb-2">
+                  Date
+                </p>
+                <p class="text-sm font-body">
+                  {new Date(project.created).toLocaleDateString("fr-FR", {
+                    year: "numeric",
+                    month: "long"
+                  })}
+                </p>
+              </div>
+            )}
+
+            {/* URL du site web */}
+            {project.siteUrl && (
+              <div class="pt-6 border-t border-border">
+                <p class="text-xs text-muted-foreground uppercase tracking-wider font-body mb-2">
+                  Lien du site
+                </p>
+                <a
+                  href={project.siteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-body text-primary hover:text-primary/80 transition-colors break-all"
+                >
+                  {project.siteUrl}
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Galerie complète - Carousel */}
+    {project.gallery && project.gallery.length > 0 && (
+      <section class="container px-6 mb-16 md:mb-24">
+        <h2
+          class="font-heading text-2xl md:text-3xl text-foreground mb-12 uppercase tracking-wide"
+        >
+          Galerie
+        </h2>
+        <div class="gallery-carousel-wrapper">
+          <div class="gallery-carousel">
+            {project.gallery.map((imageUrl, index) => (
+              <div
+                class="gallery-carousel-item"
+                data-index={index}
+                data-image={imageUrl}
+              >
+                <div class="aspect-video overflow-hidden bg-card border border-border group cursor-pointer">
+                  <img
+                    src={imageUrl}
+                    alt={`${project.title} - Image ${index + 1}`}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 cursor-pointer"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation buttons */}
+          <button
+            class="carousel-btn carousel-btn-prev"
+            aria-label="Image précédente"
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button
+            class="carousel-btn carousel-btn-next"
+            aria-label="Image suivante"
+          >
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
+
+          {/* Dots */}
+          <div class="carousel-dots">
+            {project.gallery.map((_, index) => (
+              <button
+                class="carousel-dot"
+                data-index={index}
+                aria-label={`Aller à l'image ${index + 1}`}
+              ></button>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
+    {/* Lightbox Modal */}
+    <div class="lightbox-modal" id="lightboxModal">
+      <div class="lightbox-overlay"></div>
+      <div class="lightbox-container">
+        <button class="lightbox-close" aria-label="Fermer">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+        <button class="lightbox-btn lightbox-btn-prev" aria-label="Image précédente">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+        <div class="lightbox-image-container">
+          <img id="lightboxImage" src="" alt="Image agrandie" class="lightbox-image" />
+        </div>
+        <button class="lightbox-btn lightbox-btn-next" aria-label="Image suivante">
+          <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Navigation entre projets */}
+    <section class="container px-6 mb-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {previousProject ? (
+          <a
+            href={`/projects/${previousProject.id}`}
+            class="group flex flex-col p-6 border border-border hover:border-foreground transition-colors"
+          >
+            <span
+              class="text-xs uppercase tracking-wider text-muted-foreground mb-2 font-body"
+            >
+              Projet Précédent
+            </span>
+            <h3
+              class="font-heading text-lg text-foreground group-hover:translate-x-1 transition-transform"
+            >
+              {previousProject.title}
+            </h3>
+          </a>
+        ) : (
+          <div />
+        )}
+
+        {nextProject ? (
+          <a
+            href={`/projects/${nextProject.id}`}
+            class="group flex flex-col items-end text-right p-6 border border-border hover:border-foreground transition-colors"
+          >
+            <span
+              class="text-xs uppercase tracking-wider text-muted-foreground mb-2 font-body"
+            >
+              Projet Suivant
+            </span>
+            <h3
+              class="font-heading text-lg text-foreground group-hover:translate-x-1 transition-transform"
+            >
+              {nextProject.title}
+            </h3>
+          </a>
+        ) : (
+          <div />
+        )}
+      </div>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  article {
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .gallery-carousel-wrapper {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .gallery-carousel {
+    display: flex;
+    overflow: hidden;
+    border: 1px solid hsl(var(--border));
+    background-color: hsl(var(--card));
+    scroll-behavior: smooth;
+    aspect-ratio: 16 / 9;
+  }
+
+  .gallery-carousel-item {
+    flex: 0 0 100%;
+    width: 100%;
+    transition: opacity 0.5s ease-in-out;
+  }
+
+  .gallery-carousel-item.hidden {
+    display: none;
+  }
+
+  .carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s ease;
+    z-index: 10;
+  }
+
+  .carousel-btn:hover {
+    background: rgba(0, 0, 0, 0.8);
+  }
+
+  .carousel-btn-prev {
+    left: 16px;
+  }
+
+  .carousel-btn-next {
+    right: 16px;
+  }
+
+  .carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .carousel-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: hsl(var(--muted-foreground) / 0.4);
+    border: 1px solid hsl(var(--border));
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .carousel-dot.active {
+    background: hsl(var(--foreground));
+  }
+
+  .skills-logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .skill-logo-item {
+    width: 54px;
+    height: 54px;
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid hsl(var(--border));
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 8px;
+  }
+
+  .skill-logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    filter: none;
+  }
+
+  /* Lightbox styles */
+  .lightbox-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+  }
+
+  .lightbox-modal.active {
+    display: flex;
+  }
+
+  .lightbox-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    cursor: pointer;
+  }
+
+  .lightbox-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 1001;
+  }
+
+  .lightbox-image-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90vw;
+    max-height: 90vh;
+    overflow: auto;
+  }
+
+  .lightbox-image {
+    width: auto;
+    height: auto;
+    max-width: 90vw;
+    max-height: 90vh;
+    animation: zoomIn 0.3s ease-out;
+  }
+
+  @keyframes zoomIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .lightbox-close {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1002;
+  }
+
+  .lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .lightbox-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 1002;
+  }
+
+  .lightbox-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+
+  .lightbox-btn-prev {
+    left: 24px;
+  }
+
+  .lightbox-btn-next {
+    right: 24px;
+  }
+
+  @media (max-width: 768px) {
+    .lightbox-close,
+    .lightbox-btn {
+      width: 40px;
+      height: 40px;
+    }
+
+    .lightbox-close {
+      top: 16px;
+      right: 16px;
+    }
+
+    .lightbox-btn-prev {
+      left: 12px;
+    }
+
+    .lightbox-btn-next {
+      right: 12px;
+    }
+  }
+</style>
+
+<script is:inline>
+  // Carousel functionality
+  const carouselBtnPrev = document.querySelector('.carousel-btn-prev');
+  const carouselBtnNext = document.querySelector('.carousel-btn-next');
+  const carouselDots = document.querySelectorAll('.carousel-dot');
+  const carouselItems = document.querySelectorAll('.gallery-carousel-item');
+  const galleryImages = document.querySelectorAll('[data-image]');
+
+  // Lightbox functionality
+  const lightboxModal = document.getElementById('lightboxModal');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.querySelector('.lightbox-close');
+  const lightboxBtnPrev = document.querySelector('.lightbox-btn-prev');
+  const lightboxBtnNext = document.querySelector('.lightbox-btn-next');
+  const lightboxOverlay = document.querySelector('.lightbox-overlay');
+
+  let carouselImages = [];
+  let lightboxCurrentIndex = 0;
+
+  if (carouselBtnPrev && carouselBtnNext && carouselItems.length > 0) {
+    let currentIndex = 0;
+
+    // Get all images from carousel
+    carouselImages = Array.from(carouselItems).map(item => item.getAttribute('data-index'));
+
+    const updateCarousel = (newIndex) => {
+      // Hide all items
+      carouselItems.forEach(item => {
+        item.classList.add('hidden');
+      });
+      
+      // Show current item
+      carouselItems[newIndex].classList.remove('hidden');
+
+      // Update dots
+      carouselDots.forEach((dot, index) => {
+        if (index === newIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+
+      currentIndex = newIndex;
+    };
+
+    // Initialize
+    updateCarousel(0);
+
+    // Event listeners for carousel
+    carouselBtnPrev.addEventListener('click', () => {
+      const newIndex = currentIndex === 0 ? carouselItems.length - 1 : currentIndex - 1;
+      updateCarousel(newIndex);
+    });
+
+    carouselBtnNext.addEventListener('click', () => {
+      const newIndex = currentIndex === carouselItems.length - 1 ? 0 : currentIndex + 1;
+      updateCarousel(newIndex);
+    });
+
+    carouselDots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const index = parseInt(dot.getAttribute('data-index'));
+        updateCarousel(index);
+      });
+    });
+
+    // Keyboard navigation for carousel
+    document.addEventListener('keydown', (e) => {
+      const carousel = document.querySelector('.gallery-carousel-wrapper');
+      if (carousel && carousel.closest('article') && !lightboxModal.classList.contains('active')) {
+        if (e.key === 'ArrowLeft') {
+          carouselBtnPrev.click();
+        } else if (e.key === 'ArrowRight') {
+          carouselBtnNext.click();
+        }
+      }
+    });
+
+    // Lightbox functionality
+    const openLightbox = (index) => {
+      lightboxCurrentIndex = parseInt(index);
+      const imageUrl = carouselItems[lightboxCurrentIndex].getAttribute('data-image');
+      lightboxImage.src = imageUrl;
+      lightboxModal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+
+    const closeLightbox = () => {
+      lightboxModal.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
+    const updateLightbox = (newIndex) => {
+      if (newIndex < 0) {
+        newIndex = carouselItems.length - 1;
+      } else if (newIndex >= carouselItems.length) {
+        newIndex = 0;
+      }
+      lightboxCurrentIndex = newIndex;
+      const imageUrl = carouselItems[lightboxCurrentIndex].getAttribute('data-image');
+      lightboxImage.src = imageUrl;
+    };
+
+    // Click on carousel items to open lightbox
+    carouselItems.forEach((item, index) => {
+      const img = item.querySelector('img');
+      if (img) {
+        img.addEventListener('click', () => {
+          openLightbox(index);
+        });
+      }
+    });
+
+    // Lightbox navigation
+    lightboxClose.addEventListener('click', closeLightbox);
+    lightboxOverlay.addEventListener('click', closeLightbox);
+
+    lightboxBtnPrev.addEventListener('click', () => {
+      updateLightbox(lightboxCurrentIndex - 1);
+    });
+
+    lightboxBtnNext.addEventListener('click', () => {
+      updateLightbox(lightboxCurrentIndex + 1);
+    });
+
+    // Keyboard navigation for lightbox
+    document.addEventListener('keydown', (e) => {
+      if (lightboxModal.classList.contains('active')) {
+        if (e.key === 'Escape') {
+          closeLightbox();
+        } else if (e.key === 'ArrowLeft') {
+          lightboxBtnPrev.click();
+        } else if (e.key === 'ArrowRight') {
+          lightboxBtnNext.click();
+        }
+      }
+    });
+  }
+</script>

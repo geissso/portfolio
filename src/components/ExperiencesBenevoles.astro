@@ -1,0 +1,155 @@
+---
+const experiences = [
+  {
+    title: "BDE",
+    label: "Premiere experience benevole",
+    description:
+      "Participation a la vie du Bureau des Etudiants avec des missions de communication, de visuels et de soutien aux evenements.",
+    details: "Textes, supports de communication et presence sur les temps forts de l'association.",
+    href: "/bde",
+    image: "/images/photo-1.jpg",
+    imageAlt: "Illustration de l'experience benevole au BDE",
+    reverse: false,
+    animateFrom: "right"
+  },
+  {
+    title: "CAPS",
+    label: "Seconde experience benevole",
+    description:
+      "Experience associative autour de la creation de contenus et de la valorisation des actions du collectif.",
+    details: "Conception de visuels, adaptation des messages et accompagnement des actions de terrain.",
+    href: "/caps",
+    image: "/images/hero_caps.webp",
+    imageAlt: "Illustration de l'experience benevole CAPS",
+    reverse: true,
+    animateFrom: "left"
+  }
+];
+---
+
+<section class="experiences-benevoles-section py-14 md:py-20" id="experiences-benevoles">
+  <div class="container px-6 max-w-2xl mb-10 md:mb-14">
+    <p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
+      Experiences benevoles
+    </p>
+    <h2 class="font-heading text-4xl md:text-5xl text-foreground mb-4">
+      Deux associations, deux bandes qui racontent mon engagement.
+    </h2>
+    <p class="text-base font-body leading-relaxed text-muted-foreground max-w-xl">
+      Ces deux experiences me permettent de relier creation visuelle, coordination et communication.
+      Chaque bandeau ci-dessous ouvre la page dediee de l'association correspondante.
+    </p>
+  </div>
+
+  <div class="space-y-5 md:space-y-6">
+    {
+      experiences.map((experience) => (
+        <a
+          href={experience.href}
+          class="experience-band group mx-auto block overflow-hidden border border-border bg-card/65 backdrop-blur-sm no-underline max-w-5xl"
+          data-experience-band
+          data-animate-from={experience.animateFrom}
+          aria-label={`Decouvrir l'experience ${experience.title}`}
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2">
+            <div class={`flex flex-col justify-center gap-3 p-5 md:p-7 ${experience.reverse ? "md:order-2" : "md:order-1"}`}>
+              <div>
+                <p class="text-xs font-body uppercase tracking-[0.28em] text-muted-foreground mb-4">
+                  {experience.label}
+                </p>
+                <h3 class="font-heading text-2xl md:text-[2.35rem] text-foreground mb-3 group-hover:text-primary transition-colors">
+                  {experience.title}
+                </h3>
+                <p class="text-sm md:text-[0.98rem] font-body leading-relaxed text-foreground/85 mb-3 max-w-md">
+                  {experience.description}
+                </p>
+                <p class="text-xs md:text-sm font-body leading-relaxed text-muted-foreground max-w-md">
+                  {experience.details}
+                </p>
+              </div>
+
+              <span class="inline-flex items-center gap-2 text-xs md:text-sm font-body uppercase tracking-[0.22em] text-foreground">
+                Voir la page
+                <svg class="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </span>
+            </div>
+
+            <div class={`relative min-h-[170px] md:min-h-[220px] overflow-hidden border-t border-border md:border-t-0 md:border-l md:border-r-0 ${experience.reverse ? "md:order-1" : "md:order-2"}`}>
+              <img
+                src={experience.image}
+                alt={experience.imageAlt}
+                class="h-full w-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-br from-background/0 via-background/0 to-background/15"></div>
+            </div>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+<script is:inline>
+  const bands = document.querySelectorAll("[data-experience-band]");
+
+  const revealBand = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  };
+
+  if (bands.length > 0 && "IntersectionObserver" in window) {
+    const observer = new IntersectionObserver(revealBand, {
+      threshold: 0.25,
+      rootMargin: "0px 0px -8% 0px"
+    });
+
+    bands.forEach((band) => observer.observe(band));
+  } else {
+    bands.forEach((band) => band.classList.add("is-visible"));
+  }
+</script>
+
+<style>
+  .experiences-benevoles-section {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    overflow-x: clip;
+  }
+
+  .experiences-benevoles-section .experience-band {
+    width: 100%;
+  }
+
+  [data-experience-band] {
+    opacity: 0;
+    transform: translateX(var(--band-offset, 72px));
+    transition: opacity 700ms ease, transform 700ms ease, border-color 300ms ease;
+    --band-offset: 72px;
+  }
+
+  [data-experience-band][data-animate-from="left"] {
+    --band-offset: -72px;
+  }
+
+  [data-experience-band].is-visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-experience-band] {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+  }
+</style>

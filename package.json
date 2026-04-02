@@ -9,7 +9,11 @@
     "preview": "astro preview --host --port 8080",
     "check": "astro check"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@astrojs/check": "^0.9.8",
+    "pocketbase": "^0.26.8",
+    "typescript": "^5.9.3"
+  },
   "devDependencies": {
     "@astrojs/tailwind": "^5.1.0",
     "astro": "^5.11.0",

@@ -1,0 +1,89 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="CAPS - Experience benevole" description="Experience benevole au sein de l'association CAPS.">
+	<article class="pb-20 md:pb-28">
+		<section class="relative isolate min-h-[58vh] md:min-h-[68vh] overflow-hidden">
+			<img
+				src="/images/hero_caps.webp"
+				alt="Hero CAPS"
+				class="absolute inset-0 h-full w-full object-cover"
+				loading="eager"
+			/>
+			<div class="absolute inset-0 bg-black/55"></div>
+			<div class="container relative z-10 flex min-h-[58vh] md:min-h-[68vh] flex-col justify-between px-6 pt-20 pb-8 md:pt-24 md:pb-12">
+				<a
+					href="/"
+					class="inline-flex w-fit items-center gap-2 text-sm font-body uppercase tracking-wider text-white/90 hover:text-white transition-colors"
+				>
+					<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+					Retour
+				</a>
+				<div>
+					<p class="text-xs font-body uppercase tracking-[0.3em] text-white/80 mb-3">Experience benevole</p>
+					<h1 class="font-heading text-5xl md:text-7xl text-white mb-3">CAPS</h1>
+					<p class="font-body text-sm md:text-base text-white/90 max-w-xl">
+						Engagement associatif, communication sensible et creations au service du collectif.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<div class="container px-6 pt-14 md:pt-20">
+			<div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center mb-14 md:mb-20">
+			<div class="order-2 lg:order-1 aspect-[4/5] overflow-hidden border border-border bg-card shadow-sm">
+				<img src="/images/photo-2.jpg" alt="Experience CAPS" class="h-full w-full object-cover" loading="lazy" />
+			</div>
+
+			<div class="order-1 lg:order-2">
+				<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
+					Experience benevole
+				</p>
+				<h2 class="font-heading text-4xl md:text-5xl text-foreground mb-6">
+					CAPS
+				</h2>
+				<p class="text-base md:text-lg font-body leading-relaxed text-muted-foreground max-w-2xl mb-6">
+					CAPS represente une autre facette de mon engagement: travailler sur la mise en valeur des actions,
+					construire des contenus lisibles et participer a une communication plus sensible et plus humaine.
+				</p>
+				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
+					Cette experience m'a aidee a affiner mon sens de la narration visuelle et a adapter mes creations a un cadre associatif.
+				</p>
+			</div>
+			</div>
+
+			<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Missions</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Conception de contenus, soutien visuel et accompagnement de la communication de l'association.
+				</p>
+			</div>
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Apprentissages</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Organisation, sens du detail et adaptation des messages selon les publics et les supports.
+				</p>
+			</div>
+			<div class="p-6 border border-border bg-card/60">
+				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Resultat</p>
+				<p class="font-body text-sm leading-relaxed text-foreground/85">
+					Une experience qui renforce ma pratique du design au service de l'interet collectif.
+				</p>
+			</div>
+			</section>
+
+			<div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
+			<a href="/bde" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
+				Voir BDE
+			</a>
+			<a href="/#experiences-benevoles" class="text-sm font-body uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
+				Retour aux experiences
+			</a>
+			</div>
+		</div>
+	</article>
+</BaseLayout>
