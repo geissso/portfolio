@@ -49,6 +49,7 @@
   body {
     @apply bg-background text-foreground antialiased;
     font-family: "Space Grotesk", sans-serif;
+    overflow-x: clip;
     background-image: radial-gradient(circle at 90% 10%, hsl(var(--secondary) / 0.12), transparent 34%),
       radial-gradient(circle at 10% 80%, hsl(var(--primary) / 0.1), transparent 38%);
     min-height: 100vh;
