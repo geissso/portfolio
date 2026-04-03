@@ -1,5 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const POCKETBASE_URL = (import.meta.env.PUBLIC_POCKETBASE_URL || "https://pbportfolio.geiss-solene.fr/").replace(/\/$/, "");
+const CONTACT_COLLECTION = import.meta.env.PUBLIC_CONTACT_COLLECTION || "messages";
 ---
 
 <BaseLayout title="Contact - Portfolio" description="Discutons de votre projet.">
@@ -21,14 +24,14 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 
       <form id="contact-form" class="space-y-6">
         <div>
-          <label for="name" class="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">Nom</label>
+          <label for="nom" class="block text-xs font-body uppercase tracking-widest text-muted-foreground mb-2">Nom</label>
           <input
-            id="name"
-            name="name"
+            id="nom"
+            name="nom"
             type="text"
             required
             class="w-full bg-transparent border-b border-border py-3 text-foreground font-body focus:outline-none focus:border-primary transition-colors placeholder:text-muted-foreground/50"
-            placeholder="Lorem Ipsum"
+            placeholder="Votre nom"
           />
         </div>
 
@@ -40,7 +43,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             type="email"
             required
             class="w-full bg-transparent border-b border-border py-3 text-foreground font-body focus:outline-none focus:border-primary transition-colors placeholder:text-muted-foreground/50"
-            placeholder="lorem@ipsum.com"
+            placeholder="ton.email@exemple.com"
           />
         </div>
 
@@ -52,7 +55,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
             required
             rows="5"
             class="w-full bg-transparent border-b border-border py-3 text-foreground font-body focus:outline-none focus:border-primary transition-colors resize-none placeholder:text-muted-foreground/50"
-            placeholder="Dolor sit amet consectetur..."
+            placeholder="Ecrivez votre message ici..."
           ></textarea>
         </div>
 
@@ -62,17 +65,73 @@ import BaseLayout from "../layouts/BaseLayout.astro";
         >
           Envoyer
         </button>
+
+        <p id="contact-status" class="text-sm font-body text-muted-foreground" aria-live="polite"></p>
       </form>
     </div>
   </section>
 </BaseLayout>
 
-<script is:inline>
+<script is:inline define:vars={{ pocketbaseUrl: POCKETBASE_URL, contactCollection: CONTACT_COLLECTION }}>
   const contactForm = document.querySelector("#contact-form");
+  const contactStatus = document.querySelector("#contact-status");
+  const submitButton = contactForm?.querySelector('button[type="submit"]');
 
-  contactForm?.addEventListener("submit", (event) => {
+  const setStatus = (message, isError = false) => {
+    if (!contactStatus) return;
+    contactStatus.textContent = message;
+    contactStatus.classList.toggle("text-secondary", !isError);
+    contactStatus.classList.toggle("text-red-500", isError);
+  };
+
+  contactForm?.addEventListener("submit", async (event) => {
     event.preventDefault();
-    alert("Message envoye !");
-    contactForm.reset();
+
+    const formData = new FormData(contactForm);
+    const nom = String(formData.get("nom") || "").trim();
+    const email = String(formData.get("email") || "").trim();
+    const message = String(formData.get("message") || "").trim();
+
+    if (!nom || !email || !message) {
+      setStatus("Merci de remplir tous les champs.", true);
+      return;
+    }
+
+    if (submitButton) {
+      submitButton.disabled = true;
+      submitButton.textContent = "Envoi...";
+    }
+
+    setStatus("");
+
+    try {
+      const response = await fetch(`${pocketbaseUrl}/api/collections/${contactCollection}/records`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nom,
+          email,
+          message
+        })
+      });
+
+      if (!response.ok) {
+        const errorPayload = await response.json().catch(() => null);
+        const fallbackMessage = `Impossible d'envoyer le message (${response.status}).`;
+        throw new Error(errorPayload?.message || fallbackMessage);
+      }
+
+      contactForm.reset();
+      setStatus("Message envoyé.", false);
+    } catch (error) {
+      setStatus(error?.message || "Une erreur est survenue.", true);
+    } finally {
+      if (submitButton) {
+        submitButton.disabled = false;
+        submitButton.textContent = "Envoyer";
+      }
+    }
   });
 </script>
