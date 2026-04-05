@@ -81,6 +81,23 @@ const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex +
               </div>
             </div>
 
+            {/* URL du site web */}
+            {project.siteUrl && (
+              <div>
+                <p class="text-xs text-muted-foreground uppercase tracking-wider font-body mb-2">
+                  Lien du site
+                </p>
+                <a
+                  href={project.siteUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-body text-primary hover:text-primary/80 transition-colors break-all"
+                >
+                  {project.siteUrl}
+                </a>
+              </div>
+            )}
+
             <div>
               <p class="text-base leading-relaxed text-foreground font-body">
                 {project.description}
@@ -122,22 +139,6 @@ const nextProject = currentIndex < projects.length - 1 ? projects[currentIndex +
               </div>
             )}
 
-            {/* URL du site web */}
-            {project.siteUrl && (
-              <div class="pt-6 border-t border-border">
-                <p class="text-xs text-muted-foreground uppercase tracking-wider font-body mb-2">
-                  Lien du site
-                </p>
-                <a
-                  href={project.siteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-sm font-body text-primary hover:text-primary/80 transition-colors break-all"
-                >
-                  {project.siteUrl}
-                </a>
-              </div>
-            )}
           </div>
         </div>
       </div>

@@ -6,12 +6,17 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 	<article class="pb-20 md:pb-28">
 		<section class="relative isolate min-h-[58vh] md:min-h-[68vh] overflow-hidden">
 			<img
-				src="/images/hero_caps.webp"
+				src="/images/hero_caps1.webp"
 				alt="Hero CAPS"
 				class="absolute inset-0 h-full w-full object-cover"
 				loading="eager"
 			/>
-			<div class="absolute inset-0 bg-black/55"></div>
+			<div class="absolute inset-0 bg-black/10"></div>
+			<div class="absolute bottom-4 right-6 z-20 text-right md:bottom-6 md:right-8">
+				<p class="text-xs font-body text-white/20">
+					Photo: <a href="https://www.instagram.com/splmo_7410/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-white transition-colors">@splmo_7410</a>
+				</p>
+			</div>
 			<div class="container relative z-10 flex min-h-[58vh] md:min-h-[68vh] flex-col justify-between px-6 pt-20 pb-8 md:pt-24 md:pb-12">
 				<a
 					href="/"
@@ -32,57 +37,138 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 			</div>
 		</section>
 
-		<div class="container px-6 pt-14 md:pt-20">
-			<div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-center mb-14 md:mb-20">
-			<div class="order-2 lg:order-1 aspect-[4/5] overflow-hidden border border-border bg-card shadow-sm">
-				<img src="/images/photo-2.jpg" alt="Experience CAPS" class="h-full w-full object-cover" loading="lazy" />
-			</div>
+		<div class="container px-6 pt-14 md:pt-20 space-y-16 md:space-y-24">
+			<section class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-start">
+				<div class="order-2 lg:order-1 grid gap-5">
+					<div class="aspect-[4/5] overflow-hidden border border-border bg-card shadow-sm">
+						<div class="h-full w-full grid place-items-center p-8 text-center">
+							<div>
+								<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Image principale</p>
+								<p class="font-body text-sm text-foreground/80">Ajouter ici une photo forte, un montage ou une capture de communication CAPS.</p>
+							</div>
+						</div>
+					</div>
+					<div class="grid grid-cols-2 gap-5">
+						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
+							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel A</p>
+						</div>
+						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
+							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel B</p>
+						</div>
+					</div>
+				</div>
 
-			<div class="order-1 lg:order-2">
-				<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
-					Experience benevole
-				</p>
-				<h2 class="font-heading text-4xl md:text-5xl text-foreground mb-6">
-					CAPS
-				</h2>
-				<p class="text-base md:text-lg font-body leading-relaxed text-muted-foreground max-w-2xl mb-6">
-					CAPS represente une autre facette de mon engagement: travailler sur la mise en valeur des actions,
-					construire des contenus lisibles et participer a une communication plus sensible et plus humaine.
+				<div class="order-1 lg:order-2">
+					<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
+						Experience benevole
+					</p>
+					<h2 class="font-heading text-4xl md:text-5xl text-foreground mb-6">
+						CAPS
+					</h2>
+					<p class="text-base md:text-lg font-body leading-relaxed text-muted-foreground max-w-2xl mb-6">
+					CAPS represente une autre facette de mon engagement: travailler sur la mise en valeur des actions, construire des contenus lisibles et participer a une communication plus sensible et plus humaine.
 				</p>
 				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
 					Cette experience m'a aidee a affiner mon sens de la narration visuelle et a adapter mes creations a un cadre associatif.
-				</p>
-			</div>
-			</div>
+					</p>
+				</div>
+			</section>
 
 			<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
-			<div class="p-6 border border-border bg-card/60">
-				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Missions</p>
-				<p class="font-body text-sm leading-relaxed text-foreground/85">
-					Conception de contenus, soutien visuel et accompagnement de la communication de l'association.
-				</p>
-			</div>
-			<div class="p-6 border border-border bg-card/60">
-				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Apprentissages</p>
-				<p class="font-body text-sm leading-relaxed text-foreground/85">
-					Organisation, sens du detail et adaptation des messages selon les publics et les supports.
-				</p>
-			</div>
-			<div class="p-6 border border-border bg-card/60">
-				<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Resultat</p>
-				<p class="font-body text-sm leading-relaxed text-foreground/85">
-					Une experience qui renforce ma pratique du design au service de l'interet collectif.
-				</p>
-			</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Contexte</p>
+					<p class="font-body text-sm leading-relaxed text-foreground/85">
+						CAPS est une association a mission sociale. Sa communication doit être accessible, bienveillante et en phase avec les publics qu'elle accompagne.
+					</p>
+				</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Approche</p>
+					<p class="font-body text-sm leading-relaxed text-foreground/85">
+						Valorisations des actions, creation de contenus sensibles, supports informatifs et visuels inclusifs et touchants.
+					</p>
+				</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Valeur ajoutée</p>
+					<p class="font-body text-sm leading-relaxed text-foreground/85">
+						Communication plus humaine, meilleure lisibilite des actions et renforcement de l'image de CAPS comme acteur solidaire.
+					</p>
+				</div>
+			</section>
+
+			<section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
+				<div class="space-y-5">
+					<div class="p-6 border border-border bg-background/60">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Panneau editorial</p>
+						<p class="font-body text-sm leading-relaxed text-foreground/85">
+							Ici tu peux ajouter un long texte sur la production, la relation avec l'equipe et la facon dont tu as donne une identite visuelle a CAPS.
+						</p>
+					</div>
+					<div class="grid gap-5 md:grid-cols-2">
+						<div class="aspect-[4/3] border border-dashed border-border bg-card/50 grid place-items-center text-center p-4">
+							<p class="text-sm font-body text-muted-foreground">Placeholder pour une citation, un extrait de brief ou une note d'intention.</p>
+						</div>
+						<div class="aspect-[4/3] border border-dashed border-border bg-card/50 grid place-items-center text-center p-4">
+							<p class="text-sm font-body text-muted-foreground">Placeholder pour une capture de post, une affiche ou un visuel reseau social.</p>
+						</div>
+					</div>
+				</div>
+
+				<div class="space-y-5">
+					<div class="p-6 border border-border bg-card/60">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Missions</p>
+						<p class="font-body text-sm leading-relaxed text-foreground/85">
+							Conception de contenus, soutien visuel et accompagnement de la communication de l'association.
+						</p>
+					</div>
+					<div class="p-6 border border-border bg-card/60">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Apprentissages</p>
+						<p class="font-body text-sm leading-relaxed text-foreground/85">
+							Organisation, sens du detail et adaptation des messages selon les publics et les supports.
+						</p>
+					</div>
+					<div class="p-6 border border-border bg-card/60">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Resultat</p>
+						<p class="font-body text-sm leading-relaxed text-foreground/85">
+							Une experience qui renforce ma pratique du design au service de l'interet collectif.
+						</p>
+					</div>
+				</div>
+			</section>
+
+			<section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 1</p>
+					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
+						Photo / visuel
+					</div>
+				</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 2</p>
+					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
+						Photo / visuel
+					</div>
+				</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 3</p>
+					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
+						Photo / visuel
+					</div>
+				</div>
+				<div class="p-6 border border-border bg-card/60">
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 4</p>
+					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
+						Photo / visuel
+					</div>
+				</div>
 			</section>
 
 			<div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
-			<a href="/bde" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
-				Voir BDE
-			</a>
-			<a href="/#experiences-benevoles" class="text-sm font-body uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
-				Retour aux experiences
-			</a>
+				<a href="/bde" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
+					Voir BDE
+				</a>
+				<a href="/#experiences-benevoles" class="text-sm font-body uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors">
+					Retour aux experiences
+				</a>
 			</div>
 		</div>
 	</article>
