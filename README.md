@@ -18,6 +18,8 @@ npm run dev
 
 Le site est disponible sur http://localhost:8080
 
+Si tu veux lire les donnees en local, lance aussi PocketBase depuis le dossier `PocketBase/` afin qu'il reponde sur `http://127.0.0.1:8090`.
+
 ## Scripts utiles
 
 ```bash

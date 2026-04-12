@@ -1,5 +1,65 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+
+const capsVideoUrl = (
+	import.meta.env.PUBLIC_CAPS_VIDEO_URL ||
+	"https://youtu.be/1zuooNA-b8Y?si=E1BQYHWkbAi2cTUn"
+).trim();
+
+function getVideoProvider(url: string): "none" | "youtube" | "vimeo" | "file" {
+	if (!url) return "none";
+	if (/youtube\.com|youtu\.be/.test(url)) return "youtube";
+	if (/vimeo\.com/.test(url)) return "vimeo";
+	return "file";
+}
+
+function getEmbedUrl(url: string, provider: "none" | "youtube" | "vimeo" | "file"): string {
+	if (provider === "youtube") {
+		const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+		if (shortMatch?.[1]) {
+			return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1&rel=0`;
+		}
+
+		const longMatch = url.match(/[?&]v=([A-Za-z0-9_-]+)/);
+		if (longMatch?.[1]) {
+			return `https://www.youtube.com/embed/${longMatch[1]}?autoplay=1&rel=0`;
+		}
+
+		if (url.includes("/embed/")) {
+			return url.includes("autoplay=1") ? url : `${url}${url.includes("?") ? "&" : "?"}autoplay=1`;
+		}
+	}
+
+	if (provider === "vimeo") {
+		const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
+		if (vimeoMatch?.[1]) {
+			return `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1`;
+		}
+	}
+
+	return "";
+}
+
+function getYouTubeVideoId(url: string): string {
+	const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
+	if (shortMatch?.[1]) return shortMatch[1];
+
+	const longMatch = url.match(/[?&]v=([A-Za-z0-9_-]+)/);
+	if (longMatch?.[1]) return longMatch[1];
+
+	const embedMatch = url.match(/\/embed\/([A-Za-z0-9_-]+)/);
+	if (embedMatch?.[1]) return embedMatch[1];
+
+	return "";
+}
+
+const videoProvider = getVideoProvider(capsVideoUrl);
+const capsVideoEmbedUrl = getEmbedUrl(capsVideoUrl, videoProvider);
+const capsVideoPreview =
+	videoProvider === "youtube"
+		? `https://img.youtube.com/vi/${getYouTubeVideoId(capsVideoUrl)}/hqdefault.jpg`
+		: "/images/hero_caps1.webp";
+const hasCapsVideo = capsVideoUrl.length > 0;
 ---
 
 <BaseLayout title="CAPS - Experience benevole" description="Experience benevole au sein de l'association CAPS.">
@@ -48,14 +108,6 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 							</div>
 						</div>
 					</div>
-					<div class="grid grid-cols-2 gap-5">
-						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
-							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel A</p>
-						</div>
-						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
-							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel B</p>
-						</div>
-					</div>
 				</div>
 
 				<div class="order-1 lg:order-2">
@@ -71,6 +123,69 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
 					Cette experience m'a aidee a affiner mon sens de la narration visuelle et a adapter mes creations a un cadre associatif.
 					</p>
+				</div>
+			</section>
+
+			<section class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-6 md:px-10 py-12 md:py-16">
+				<div class="mx-auto max-w-none space-y-6">
+					<div class="container px-0">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Apercu video</p>
+						<p class="font-body text-sm text-foreground/80 max-w-2xl">
+							Clique sur jouer pour lancer la video CAPS directement sur la page.
+						</p>
+					</div>
+
+					{hasCapsVideo ? (
+						<div class="space-y-4" id="capsVideoSection" data-provider={videoProvider}>
+							<button
+								type="button"
+								id="capsVideoPreview"
+								class="group relative block w-full overflow-hidden"
+								aria-label="Lancer la video CAPS"
+							>
+								<img
+									src={capsVideoPreview}
+									alt="Apercu video CAPS"
+									class="w-full h-[58vh] md:h-[72vh] object-cover transition-transform duration-500 group-hover:scale-[1.02]"
+								/>
+								<div class="absolute inset-0 bg-black/35 group-hover:bg-black/25 transition-colors"></div>
+								<div class="absolute inset-0 flex items-center justify-center">
+									<span class="inline-flex items-center gap-3 bg-white/90 px-5 py-3 text-sm font-body uppercase tracking-wider text-black">
+										<svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+											<polygon points="8,5 19,12 8,19"></polygon>
+										</svg>
+										Jouer la video
+									</span>
+								</div>
+							</button>
+
+							{videoProvider === "file" ? (
+								<video
+									id="capsVideoPlayer"
+									class="hidden w-full h-[58vh] md:h-[72vh] object-contain bg-black"
+									controls
+									playsinline
+									preload="metadata"
+									src={capsVideoUrl}
+								></video>
+							) : (
+								<iframe
+									id="capsVideoPlayer"
+									class="hidden w-full h-[58vh] md:h-[72vh] bg-black"
+									title="Video CAPS"
+									src={capsVideoEmbedUrl}
+									allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+									allowfullscreen
+								></iframe>
+							)}
+						</div>
+					) : (
+						<div class="w-full border border-dashed border-border p-8 text-center">
+							<p class="font-body text-sm text-muted-foreground">
+								Ajoute `PUBLIC_CAPS_VIDEO_URL` dans ton environnement pour afficher l'apercu video cliquable ici.
+							</p>
+						</div>
+					)}
 				</div>
 			</section>
 
@@ -173,3 +288,19 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 		</div>
 	</article>
 </BaseLayout>
+
+<script is:inline>
+	const capsPreview = document.getElementById("capsVideoPreview");
+	const capsPlayer = document.getElementById("capsVideoPlayer");
+
+	if (capsPreview && capsPlayer) {
+		capsPreview.addEventListener("click", () => {
+			capsPreview.classList.add("hidden");
+			capsPlayer.classList.remove("hidden");
+
+			if (capsPlayer.tagName === "VIDEO") {
+				capsPlayer.play().catch(() => {});
+			}
+		});
+	}
+</script>

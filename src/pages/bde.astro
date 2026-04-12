@@ -52,6 +52,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
 					Ce projet m'a permis de travailler dans un contexte concret, avec de vraies contraintes de communication et de délais. J'y ai développé ma capacité à créer des visuels efficaces, à adapter mon design à une cible étudiante et à maintenir une cohérence graphique sur l'ensemble des supports.
 					</p>
+
 				</div>
 
 				<div class="grid gap-5">
@@ -63,13 +64,54 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 							</div>
 						</div>
 					</div>
-					<div class="grid grid-cols-2 gap-5">
-						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
-							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel 1</p>
-						</div>
-						<div class="aspect-[1/1] border border-dashed border-border bg-card/50 p-4 flex items-end">
-							<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Placeholder visuel 2</p>
-						</div>
+				</div>
+			</section>
+
+			<section class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-6 md:px-10 py-12 md:py-16">
+				<div class="mx-auto max-w-none space-y-8">
+					<div class="container px-0">
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Affiches MMI</p>
+						<p class="font-body text-sm text-foreground/80 max-w-2xl">
+							Trois affiches mises en avant comme elements principaux de la page.
+						</p>
+					</div>
+
+					<div class="grid gap-10 lg:grid-cols-3">
+						<figure class="m-0">
+							<div class="flex aspect-[4/5] items-center justify-center overflow-hidden bg-transparent">
+								<img src="/images/affiche_mmi.webp" alt="Affiche MMI" class="h-full w-full object-contain" />
+							</div>
+							<figcaption class="mt-4 space-y-2">
+								<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Affiche principale</p>
+								<p class="text-sm font-body text-foreground/80 leading-relaxed">
+									Visuel d'appel pour annoncer un evenement MMI avec une lecture immediate et une presence plus forte.
+								</p>
+							</figcaption>
+						</figure>
+
+						<figure class="m-0">
+							<div class="flex aspect-[4/5] items-center justify-center overflow-hidden bg-transparent">
+								<img src="/images/affiche_halloween.webp" alt="Affiche Halloween" class="h-full w-full object-contain" />
+							</div>
+							<figcaption class="mt-4 space-y-2">
+								<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Affiche animation</p>
+								<p class="text-sm font-body text-foreground/80 leading-relaxed">
+									Un format plus expressif pour une animation theme, avec un impact visuel clair.
+								</p>
+							</figcaption>
+						</figure>
+
+						<figure class="m-0">
+							<div class="flex aspect-[4/5] items-center justify-center overflow-hidden bg-transparent">
+								<img src="/images/affiche_nuit_du_cine.webp" alt="Affiche Nuit du Cinema" class="h-full w-full object-contain" />
+							</div>
+							<figcaption class="mt-4 space-y-2">
+								<p class="text-xs font-body uppercase tracking-wider text-muted-foreground">Affiche evenement</p>
+								<p class="text-sm font-body text-foreground/80 leading-relaxed">
+									Une affiche de communication simple et directe pour mettre en avant l'information essentielle.
+								</p>
+							</figcaption>
+						</figure>
 					</div>
 				</div>
 			</section>
@@ -95,60 +137,7 @@ import BaseLayout from "../layouts/BaseLayout.astro";
 				</div>
 			</section>
 
-			<section class="grid grid-cols-1 lg:grid-cols-[0.9fr_1.1fr] gap-8 items-start">
-				<div class="space-y-4">
-					<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground">A integrer</p>
-					<div class="border border-dashed border-border bg-card/50 p-6 min-h-[240px] flex items-center justify-center text-center">
-						<p class="text-sm font-body text-muted-foreground max-w-sm">
-							Place ici un carrousel, une planche d'affiches ou plusieurs photos du compte Instagram du BDE.
-						</p>
-					</div>
-				</div>
-
-				<div class="space-y-5">
-					<div class="p-6 border border-border bg-background/60">
-						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Processus</p>
-						<p class="font-body text-sm leading-relaxed text-foreground/85">
-							Ajoute ici 3 etapes: brief, recherche graphique, production finale. Cela aide a rendre la page plus concrete.
-						</p>
-					</div>
-					<div class="p-6 border border-border bg-background/60">
-						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Materiaux</p>
-						<ul class="grid gap-3 text-sm font-body text-foreground/85">
-							<li>• Affiche evenement 01</li>
-							<li>• Story Instagram 02</li>
-							<li>• Visuel print 03</li>
-						</ul>
-					</div>
-				</div>
-			</section>
-
-			<section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 1</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 2</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 3</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 4</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-			</section>
+			
 
 			<section class="grid grid-cols-1 md:grid-cols-3 gap-5">
 				<div class="p-6 border border-border bg-card/60">
