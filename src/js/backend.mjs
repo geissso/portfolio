@@ -1,8 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const DEFAULT_POCKETBASE_URL = import.meta.env.DEV
-	? "http://127.0.0.1:8090"
-	: "https://pbportfolio.geiss-solene.fr/";
+const DEFAULT_POCKETBASE_URL = "https://pbportfolio.geiss-solene.fr/";
 
 const POCKETBASE_URL = import.meta.env.PUBLIC_POCKETBASE_URL || DEFAULT_POCKETBASE_URL;
 const db = new PocketBase(POCKETBASE_URL);

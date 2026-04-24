@@ -98,31 +98,69 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 		</section>
 
 		<div class="container px-6 pt-14 md:pt-20 space-y-16 md:space-y-24">
-			<section class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-10 items-start">
-				<div class="order-2 lg:order-1 grid gap-5">
-					<div class="aspect-[4/5] overflow-hidden border border-border bg-card shadow-sm">
-						<div class="h-full w-full grid place-items-center p-8 text-center">
-							<div>
-								<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Image principale</p>
-								<p class="font-body text-sm text-foreground/80">Ajouter ici une photo forte, un montage ou une capture de communication CAPS.</p>
-							</div>
-						</div>
-					</div>
+			<section class="space-y-6">
+				<div>
+					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Roles au sein de CAPS</p>
+					<h2 class="font-heading text-4xl md:text-5xl text-foreground mt-2">Mes missions sur le terrain</h2>
+					<p class="font-body text-base text-foreground/80 mt-4 max-w-3xl">
+						Je suis polyvalente sur ces missions: ces roles se completent et ne representent pas un ordre d'importance.
+					</p>
 				</div>
 
-				<div class="order-1 lg:order-2">
-					<p class="text-xs font-body uppercase tracking-[0.3em] text-muted-foreground mb-4">
-						Experience benevole
-					</p>
-					<h2 class="font-heading text-4xl md:text-5xl text-foreground mb-6">
-						CAPS
-					</h2>
-					<p class="text-base md:text-lg font-body leading-relaxed text-muted-foreground max-w-2xl mb-6">
-					CAPS represente une autre facette de mon engagement: travailler sur la mise en valeur des actions, construire des contenus lisibles et participer a une communication plus sensible et plus humaine.
-				</p>
-				<p class="text-base font-body leading-relaxed text-foreground/85 max-w-2xl">
-					Cette experience m'a aidee a affiner mon sens de la narration visuelle et a adapter mes creations a un cadre associatif.
-					</p>
+				<div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+					<article class="border border-border bg-card/60 overflow-hidden">
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="/images/commentatrice_caps.webp"
+								alt="Role de commentatrice a CAPS"
+								class="h-full w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+						<div class="p-5 space-y-2">
+							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Commentatrice</p>
+							<p class="font-body text-base text-foreground">Commentatrice</p>
+							<p class="font-body text-sm leading-relaxed text-foreground/80">
+								Presentation des actions de l'association pendant les evenements, mise en contexte des temps forts et transmission d'une parole claire et accessible au public.
+							</p>
+						</div>
+					</article>
+
+					<article class="border border-border bg-card/60 overflow-hidden">
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="/images/logistique_caps.webp"
+								alt="Role logistique a CAPS"
+								class="h-full w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+						<div class="p-5 space-y-2">
+							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Logistique</p>
+							<p class="font-body text-base text-foreground">Logistique</p>
+							<p class="font-body text-sm leading-relaxed text-foreground/80">
+								Preparation des espaces, coordination des besoins materiels et suivi operationnel pour garantir un deroulement fluide des activites de CAPS.
+							</p>
+						</div>
+					</article>
+
+					<article class="border border-border bg-card/60 overflow-hidden">
+						<div class="aspect-[4/3] overflow-hidden">
+							<img
+								src="/images/hero_caps1.webp"
+								alt="Role regie et realisation a CAPS"
+								class="h-full w-full object-cover"
+								loading="lazy"
+							/>
+						</div>
+						<div class="p-5 space-y-2">
+							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Regie / real</p>
+							<p class="font-body text-base text-foreground">Regie / real</p>
+							<p class="font-body text-sm leading-relaxed text-foreground/80">
+								Gestion de la regie et appui a la realisation pour capter les moments cles, assurer la coherence visuelle et soutenir la diffusion des contenus.
+							</p>
+						</div>
+					</article>
 				</div>
 			</section>
 
@@ -250,32 +288,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 				</div>
 			</section>
 
-			<section class="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 1</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 2</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 3</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-				<div class="p-6 border border-border bg-card/60">
-					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground mb-3">Galerie 4</p>
-					<div class="aspect-[4/3] border border-dashed border-border bg-card/40 grid place-items-center text-xs uppercase tracking-widest text-muted-foreground">
-						Photo / visuel
-					</div>
-				</div>
-			</section>
+
 
 			<div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
 				<a href="/bde" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
