@@ -32,14 +32,14 @@ function getEmbedUrl(url: string, provider: "none" | "youtube" | "vimeo" | "file
 
 	if (provider === "vimeo") {
 		const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-										<iframe
-											id="capsVideoPlayer"
-											class="hidden w-full h-[58vh] md:h-[72vh] bg-black"
-											title="Video CAPS"
-											data-src={capsVideoEmbedUrl}
-											allow="encrypted-media; picture-in-picture; fullscreen"
-											allowfullscreen
-										></iframe>
+		if (vimeoMatch?.[1]) {
+			return `https://player.vimeo.com/video/${vimeoMatch[1]}`;
+		}
+	}
+
+	return "";
+}
+
 function getYouTubeVideoId(url: string): string {
 	const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
 	if (shortMatch?.[1]) return shortMatch[1];
@@ -101,9 +101,9 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 			<section class="space-y-6">
 				<div>
 					<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Roles au sein de CAPS</p>
-					<h2 class="font-heading text-4xl md:text-5xl text-foreground mt-2">Mes missions sur le terrain</h2>
+					<h2 class="font-heading text-4xl md:text-5xl text-foreground mt-2">Mes missions</h2>
 					<p class="font-body text-base text-foreground/80 mt-4 max-w-3xl">
-						Je suis polyvalente sur ces missions: ces roles se completent et ne representent pas un ordre d'importance.
+						Je suis polyvalente sur toutes les missions présentes dans l'association. Ces rôles se completent et suivant les évènements nous sommes amenés à prendre part à des rôles différents à chaque fois.
 					</p>
 				</div>
 
@@ -121,7 +121,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Commentatrice</p>
 							<p class="font-body text-base text-foreground">Commentatrice</p>
 							<p class="font-body text-sm leading-relaxed text-foreground/80">
-								Presentation des actions de l'association pendant les evenements, mise en contexte des temps forts et transmission d'une parole claire et accessible au public.
+								Animation des directs pendant les évènements, essayer de couvrir les blancs où les problèmes techniques qu'il peut y avoir et faire passer un bon moment aux viewers !
 							</p>
 						</div>
 					</article>
@@ -139,7 +139,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Logistique</p>
 							<p class="font-body text-base text-foreground">Logistique</p>
 							<p class="font-body text-sm leading-relaxed text-foreground/80">
-								Preparation des espaces, coordination des besoins materiels et suivi operationnel pour garantir un deroulement fluide des activites de CAPS.
+								Preparation des locaux de tournage, coordination des besoins matériels et suivi opérationnel pour garantir un bon déroulement des directs.
 							</p>
 						</div>
 					</article>
@@ -157,7 +157,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Regie / real</p>
 							<p class="font-body text-base text-foreground">Regie / real</p>
 							<p class="font-body text-sm leading-relaxed text-foreground/80">
-								Gestion de la regie et appui a la realisation pour capter les moments cles, assurer la coherence visuelle et soutenir la diffusion des contenus.
+								Gestion de la regie et de la realisation, c'est tout le coeur de la diffusion, proposer les bons points de vue aux bons moments, faire en sorte que le son ne soit pas saturé ou trop faible (et que tout fonctionne).
 							</p>
 						</div>
 					</article>
@@ -167,9 +167,9 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 			<section class="w-screen relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] px-6 md:px-10 py-12 md:py-16">
 				<div class="mx-auto max-w-none space-y-6">
 					<div class="container px-0">
-						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Apercu video</p>
+						<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">
 						<p class="font-body text-sm text-foreground/80 max-w-2xl">
-							Clique sur jouer pour lancer la video CAPS directement sur la page.
+							Clique sur jouer pour lancer la video.
 						</p>
 					</div>
 
@@ -211,8 +211,8 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 									id="capsVideoPlayer"
 									class="hidden w-full h-[58vh] md:h-[72vh] bg-black"
 									title="Video CAPS"
-									src={capsVideoEmbedUrl}
-									allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+									data-src={capsVideoEmbedUrl}
+									allow="encrypted-media; picture-in-picture; fullscreen"
 									allowfullscreen
 								></iframe>
 							)}
@@ -222,7 +222,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 			</section>
 
 			<section class="border border-border bg-card/60 overflow-hidden">
-				<div class="grid grid-cols-1 md:grid-cols-3 divide-y divide-border md:divide-y-0 md:divide-x">
+				<div class="grid grid-cols-1 md:grid-cols-2 divide-y divide-border md:divide-y-0 md:divide-x">
 					<div class="p-6 md:p-8">
 						<div class="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground">
 							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
@@ -233,7 +233,7 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 						<div class="mt-4 space-y-2">
 							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Contexte</p>
 							<p class="font-body text-sm leading-relaxed text-foreground/85">
-								CAPS est une association a mission sociale. Sa communication doit être accessible, bienveillante et en phase avec les publics qu'elle accompagne.
+								CAPS est une association audio-visuelle. Sa communication doit être accessible et surtout vise les étudiants, le but est de diffuser en direct des contenus qui nous représentent et qui nous amuse.
 							</p>
 						</div>
 					</div>
@@ -244,81 +244,14 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 							</svg>
 						</div>
 						<div class="mt-4 space-y-2">
-							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Approche</p>
+							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Notre équipe</p>
 							<p class="font-body text-sm leading-relaxed text-foreground/85">
-								Valorisations des actions, creation de contenus sensibles, supports informatifs et visuels inclusifs et touchants.
-							</p>
-						</div>
-					</div>
-					<div class="p-6 md:p-8">
-						<div class="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground">
-							<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-								<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12a8.25 8.25 0 1 1 16.5 0 8.25 8.25 0 0 1-16.5 0z" />
-								<path stroke-linecap="round" stroke-linejoin="round" d="M12 9.75v4.5M12 16.5h.008" />
-							</svg>
-						</div>
-						<div class="mt-4 space-y-2">
-							<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Valeur ajoutée</p>
-							<p class="font-body text-sm leading-relaxed text-foreground/85">
-								Communication plus humaine, meilleure lisibilite des actions et renforcement de l'image de CAPS comme acteur solidaire.
+								Nous mettons un point d'honneur à rester soudés, nous avons tous une voix égale et les projets sont toujours portés par tous les membres de CAPS.
 							</p>
 						</div>
 					</div>
 				</div>
 			</section>
-
-			<section class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 items-start">
-				<div class="space-y-5">
-					<div class="border border-border bg-card/60 overflow-hidden">
-						<div class="p-6 md:p-8">
-							<div class="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground">
-								<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5h15M6 16.5h12M7.5 4.5h9v10.5h-9zM9 7.5h6M9 10.5h6" />
-								</svg>
-							</div>
-							<div class="mt-4 space-y-2">
-								<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Missions</p>
-								<p class="font-body text-sm leading-relaxed text-foreground/85">
-									Conception de contenus, soutien visuel et accompagnement de la communication de l'association.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="border border-border bg-card/60 overflow-hidden">
-						<div class="p-6 md:p-8">
-							<div class="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground">
-								<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" d="M12 3.75l6.75 3.75v8.25L12 19.5l-6.75-3.75V7.5z" />
-									<path stroke-linecap="round" stroke-linejoin="round" d="M9.75 12l1.5 1.5 3-3" />
-								</svg>
-							</div>
-							<div class="mt-4 space-y-2">
-								<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Apprentissages</p>
-								<p class="font-body text-sm leading-relaxed text-foreground/85">
-									Organisation, sens du detail et adaptation des messages selon les publics et les supports.
-								</p>
-							</div>
-						</div>
-					</div>
-					<div class="border border-border bg-card/60 overflow-hidden">
-						<div class="p-6 md:p-8">
-							<div class="inline-flex h-8 w-8 items-center justify-center rounded-sm border border-border text-muted-foreground">
-								<svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-									<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5l2.25 4.563 5.043.732-3.647 3.553.861 5.02L12 16.995l-4.507 2.373.861-5.02-3.647-3.553 5.043-.732z" />
-								</svg>
-							</div>
-							<div class="mt-4 space-y-2">
-								<p class="text-xs font-body uppercase tracking-[0.25em] text-muted-foreground">Resultat</p>
-								<p class="font-body text-sm leading-relaxed text-foreground/85">
-									Une experience qui renforce ma pratique du design au service de l'interet collectif.
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</section>
-
-
 
 			<div class="mt-12 flex items-center justify-between gap-4 flex-wrap">
 				<a href="/bde" class="text-sm font-body uppercase tracking-wider text-primary hover:text-primary/80 transition-colors">
