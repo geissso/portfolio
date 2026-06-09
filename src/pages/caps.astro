@@ -17,29 +17,29 @@ function getEmbedUrl(url: string, provider: "none" | "youtube" | "vimeo" | "file
 	if (provider === "youtube") {
 		const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
 		if (shortMatch?.[1]) {
-			return `https://www.youtube.com/embed/${shortMatch[1]}?autoplay=1&rel=0`;
+			return `https://www.youtube.com/embed/${shortMatch[1]}?rel=0`;
 		}
 
 		const longMatch = url.match(/[?&]v=([A-Za-z0-9_-]+)/);
 		if (longMatch?.[1]) {
-			return `https://www.youtube.com/embed/${longMatch[1]}?autoplay=1&rel=0`;
+			return `https://www.youtube.com/embed/${longMatch[1]}?rel=0`;
 		}
 
 		if (url.includes("/embed/")) {
-			return url.includes("autoplay=1") ? url : `${url}${url.includes("?") ? "&" : "?"}autoplay=1`;
+			return url.includes("autoplay=1") ? url.replace(/autoplay=1&?/, "") : url;
 		}
 	}
 
 	if (provider === "vimeo") {
 		const vimeoMatch = url.match(/vimeo\.com\/(\d+)/);
-		if (vimeoMatch?.[1]) {
-			return `https://player.vimeo.com/video/${vimeoMatch[1]}?autoplay=1`;
-		}
-	}
-
-	return "";
-}
-
+										<iframe
+											id="capsVideoPlayer"
+											class="hidden w-full h-[58vh] md:h-[72vh] bg-black"
+											title="Video CAPS"
+											data-src={capsVideoEmbedUrl}
+											allow="encrypted-media; picture-in-picture; fullscreen"
+											allowfullscreen
+										></iframe>
 function getYouTubeVideoId(url: string): string {
 	const shortMatch = url.match(/youtu\.be\/([A-Za-z0-9_-]+)/);
 	if (shortMatch?.[1]) return shortMatch[1];
@@ -69,10 +69,11 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 				src="/images/hero_caps1.webp"
 				alt="Hero CAPS"
 				class="absolute inset-0 h-full w-full object-cover"
-				loading="eager"
+				loading="lazy"
 			/>
 			<div class="absolute inset-0 bg-black/10"></div>
-					) : null}
+			<div class="absolute bottom-4 right-6 z-20 text-right md:bottom-6 md:right-8">
+				<p class="text-xs font-body text-white/20">
 					Photo: <a href="https://www.instagram.com/splmo_7410/" target="_blank" rel="noopener noreferrer" class="underline underline-offset-2 hover:text-white transition-colors">@splmo_7410</a>
 				</p>
 			</div>
@@ -337,9 +338,18 @@ const hasCapsVideo = capsVideoUrl.length > 0;
 
 	if (capsPreview && capsPlayer) {
 		capsPreview.addEventListener("click", () => {
+			// For iframe embeds, assign src from data-src but don't force autoplay
+			if (capsPlayer.tagName === "IFRAME") {
+				const src = capsPlayer.dataset && capsPlayer.dataset.src;
+				if (src) capsPlayer.setAttribute("src", src);
+				capsPreview.classList.add("hidden");
+				capsPlayer.classList.remove("hidden");
+				return;
+			}
+
+			// For native video, reveal and play (user initiated)
 			capsPreview.classList.add("hidden");
 			capsPlayer.classList.remove("hidden");
-
 			if (capsPlayer.tagName === "VIDEO") {
 				capsPlayer.play().catch(() => {});
 			}
