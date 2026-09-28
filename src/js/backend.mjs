@@ -12,7 +12,8 @@ const CATEGORIES = [
 	{ key: "sites", label: "Sites Web" },
 	{ key: "dessins", label: "Dessins" },
 	{ key: "identites_visuelles", label: "Identites visuelles" },
-	{ key: "maquettes", label: "Maquettes" }
+	{ key: "maquettes", label: "Maquettes" },
+	{ key: "communication", label: "Communication" }
 ];
 
 const COLLECTION_CONFIG = {
@@ -24,7 +25,8 @@ const COLLECTION_CONFIG = {
 		label: "Identites visuelles",
 		imageFields: ["img", "hero"]
 	},
-	maquettes: { label: "Maquettes", imageFields: ["img", "hero"] }
+	maquettes: { label: "Maquettes", imageFields: ["img", "hero"] },
+	communication: { label: "Communication", imageFields: ["img", "hero"] }
 };
 
 const COLLECTION_CANDIDATES = {
@@ -33,7 +35,8 @@ const COLLECTION_CANDIDATES = {
 	dessins: ["dessins"],
 	sites: ["sites"],
 	identites_visuelles: ["identites_visuelles", "identites_visuels", "Identites_visuels"],
-	maquettes: ["maquettes", "maquette"]
+	maquettes: ["maquettes", "maquette"],
+	communication: ["communication"]
 };
 
 function getImageUrl(record, filename, collection) {
@@ -89,7 +92,8 @@ function pickImage(record, categoryKey) {
 function normalizeRecord(record, categoryKey) {
 	const titleFields = {
 		identites_visuelles: [record.nom_da, record.nom, record.title, record.name],
-		maquettes: [record.nom_maquette, record.nom, record.title, record.name]
+		maquettes: [record.nom_maquette, record.nom, record.title, record.name],
+		communication: [record.nom_com, record.nom, record.title, record.name]
 	};
 
 	const createdValue = firstNonEmptyString([record.date_creation, record.created]);
@@ -99,10 +103,10 @@ function normalizeRecord(record, categoryKey) {
 		id: `${categoryKey}-${record.id}`,
 		pocketbaseId: record.id,
 		title: firstNonEmptyString(preferredTitleFields) || "Sans titre",
-		description: firstNonEmptyString([record.description]) || "Aucune description.",
+		description: firstNonEmptyString([record.description, record.description_com]) || "Aucune description.",
 		category: categoryKey,
 		categoryLabel: COLLECTION_CONFIG[categoryKey]?.label || categoryKey,
-		type: record.type_projet || record.type || "Projet",
+		type: record.type_projet || record.type_com || record.type || "Projet",
 		image: pickImage(record, categoryKey),
 		gallery: getGalleryUrls(record, categoryKey),
 		skills: getSkillsUrls(record),
@@ -165,7 +169,8 @@ export async function getPortfolioData() {
 		"dessins",
 		"sites",
 		"identites_visuelles",
-		"maquettes"
+		"maquettes",
+		"communication"
 	];
 
 	const results = await Promise.allSettled(
