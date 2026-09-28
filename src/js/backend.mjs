@@ -127,8 +127,8 @@ async function fetchFirstAvailableCollection(categoryKey) {
 
 	for (const collectionName of candidates) {
 		try {
+			// Pas de tri côté serveur : toutes les collections n'ont pas date_creation
 			const records = await db.collection(collectionName).getFullList({
-				sort: "-date_creation,-created",
 				requestKey: null
 			});
 
@@ -148,8 +148,8 @@ async function fetchFirstAvailableCollection(categoryKey) {
 
 	if (sources.length > 0) {
 		const records = Array.from(recordsMap.values()).sort((a, b) => {
-			const dateA = firstNonEmptyString([a.created, a.date_creation]);
-			const dateB = firstNonEmptyString([b.created, b.date_creation]);
+			const dateA = firstNonEmptyString([a.date_creation, a.created]);
+			const dateB = firstNonEmptyString([b.date_creation, b.created]);
 			return dateA < dateB ? 1 : -1;
 		});
 
